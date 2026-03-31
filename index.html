@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Interpreter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #1a202c;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px;
+            text-align: center;
+            color: white;
+        }
+        
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            font-weight: 300;
+            opacity: 0.95;
+            line-height: 1.5;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #2d3748;
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 160px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            padding: 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            resize: vertical;
+            transition: all 0.3s ease;
+            background-color: #f7fafc;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        textarea::placeholder {
+            color: #a0aec0;
+        }
+        
+        .button-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        button {
+            padding: 12px 32px;
+            font-weight: 600;
+            font-size: 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+        
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .muted {
+            color: #718096;
+            font-size: 12px;
+            font-weight: 400;
+        }
+        
+        .error-alert {
+            margin-top: 16px;
+            padding: 14px;
+            background-color: #fff5f5;
+            border-left: 4px solid #fc8181;
+            border-radius: 4px;
+            color: #c53030;
+            display: none;
+            font-size: 14px;
+        }
+        
+        .results {
+            margin-top: 32px;
+            display: none;
+        }
+        
+        .result-section {
+            margin-bottom: 28px;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .result-section:nth-child(2) {
+            border-left-color: #48bb78;
+        }
+        
+        .result-section:nth-child(3) {
+            border-left-color: #ed8936;
+        }
+        
+        .result-section label {
+            color: #2d3748;
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+        
+        pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            word-break: break-word;
+            line-height: 1.6;
+            color: #2d3748;
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            overflow-x: auto;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                border-radius: 0;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .subtitle {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 Error Interpreter</h1>
+            <p class="subtitle">Paste your error and instantly get: what it means, what caused it, and how to fix it</p>
+        </div>
+        
+        <div class="content">
+            <div class="form-group">
+                <label for="errorInput">Paste your error:</label>
+                <textarea id="errorInput" placeholder="Paste your error traceback or message here..."></textarea>
+                <div class="button-group">
+                    <button onclick="analyzeError()" id="analyzeBtn">Analyze Error</button>
+                    <span class="muted">💡 Tip: Press Ctrl+Enter to run</span>
+                </div>
+            </div>
+            
+            <div class="error-alert" id="errorMessage"></div>
+
+            <div class="results" id="results">
+                <div class="result-section">
+                    <label>📝 Error (Plain English)</label>
+                    <pre id="errorSummary"></pre>
+                </div>
+                <div class="result-section">
+                    <label>🔍 What is causing it?</label>
+                    <pre id="probableCause"></pre>
+                </div>
+                <div class="result-section">
+                    <label>✅ How to fix it</label>
+                    <pre id="fixText"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        async function analyzeError() {
+            const errorText = document.getElementById("errorInput").value.trim();
+            const btn = document.getElementById("analyzeBtn");
+            const errorMessage = document.getElementById("errorMessage");
+            const results = document.getElementById("results");
+            
+            if (!errorText) {
+                errorMessage.textContent = "Please paste an error message.";
+                errorMessage.style.display = "block";
+                return;
+            }
+
+            errorMessage.style.display = "none";
+            btn.disabled = true;
+            btn.textContent = "Analyzing...";
+            
+            try {
+                const response = await fetch("/analyze", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ error_text: errorText })
+                });
+                
+                if (!response.ok) {
+                    let detail = "Failed to analyze error";
+                    try {
+                        const err = await response.json();
+                        detail = err.detail || JSON.stringify(err);
+                    } catch (parseError) {
+                        detail = `HTTP ${response.status}: Server error`;
+                    }
+                    throw new Error(detail);
+                }
+                
+                let data;
+                try {
+                    data = await response.json();
+                } catch (parseError) {
+                    throw new Error("Invalid response from server");
+                }
+
+                document.getElementById("errorSummary").textContent = data.error_summary || "";
+                document.getElementById("probableCause").textContent = data.probable_cause || "";
+
+                const steps = Array.isArray(data.fix_steps) ? data.fix_steps : [];
+                const stepLines = steps
+                    .map(s => `- ${s.action}`)
+                    .filter(Boolean);
+
+                const commands = Array.isArray(data.commands) ? data.commands : [];
+                const commandLines = commands.map(c => `- ${c}`).filter(Boolean);
+
+                let fixText = stepLines.join("\n");
+                if (commandLines.length) {
+                    fixText += (fixText ? "\n\n" : "") + "Commands:\n" + commandLines.join("\n");
+                }
+                if (data.notes) {
+                    fixText += (fixText ? "\n\n" : "") + `Notes: ${data.notes}`;
+                }
+                document.getElementById("fixText").textContent = fixText || "";
+
+                results.style.display = "block";
+                
+            } catch (error) {
+                errorMessage.textContent = `Error: ${error.message}`;
+                errorMessage.style.display = "block";
+                results.style.display = "none";
+            } finally {
+                btn.disabled = false;
+                btn.textContent = "Analyze Error";
+            }
+        }
+        
+        // Allow Enter key to submit
+        document.getElementById("errorInput").addEventListener("keydown", (e) => {
+            if (e.ctrlKey && e.key === "Enter") {
+                analyzeError();
+            }
+        });
+    </script>
+</body>
+</html>
