@@ -5,11 +5,11 @@ A single AI agent built with Google ADK and Gemini that analyzes terminal errors
 ## Overview
 
 This project implements a **Developer Error Interpreter Agent** that:
-- ✅ Accepts error messages via HTTP API
-- ✅ Uses Gemini AI to analyze and explain errors
-- ✅ Returns structured JSON with error summary, root cause, and fix steps
-- ✅ Deployed on Google Cloud Run
-- ✅ Simple web UI for interactive testing
+-  Accepts error messages via HTTP API
+-  Uses Gemini AI to analyze and explain errors
+-  Returns structured JSON with error summary, root cause, and fix steps
+-  Deployed on Google Cloud Run
+-  Simple web UI for interactive testing
 
 ## Project Structure
 
@@ -41,7 +41,7 @@ The application is **live and running** on Google Cloud Run:
 🔗 **Service URL:** https://ai-agents-gemini-604413037271.asia-south1.run.app/
 
 - **Region:** asia-south1 (India)
-- **Status:** ✅ Active
+- **Status:** Active
 - **Try it now:** Visit the URL above or test the API endpoints
 
 ## Local Development
