@@ -34,6 +34,18 @@ This project implements a **Developer Error Interpreter Agent** that:
 - **Health Checks**: `/health` endpoint for monitoring
 - **Cloud Run Ready**: Dockerfile and environment configuration included
 
+## Live Deployment
+
+The application is **live and running** on Google Cloud Run:
+
+🔗 **Service URL:** https://ai-agents-gemini-604413037271.asia-south1.run.app/
+
+- **Region:** asia-south1 (India)
+- **Status:** ✅ Active
+- **Try it now:** Visit the URL above or test the API endpoints
+
+For deployment instructions, see [`CLOUD_DEPLOYMENT.md`](CLOUD_DEPLOYMENT.md ).
+
 ## Local Development
 
 ### Prerequisites
