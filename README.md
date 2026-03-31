@@ -44,8 +44,6 @@ The application is **live and running** on Google Cloud Run:
 - **Status:** ✅ Active
 - **Try it now:** Visit the URL above or test the API endpoints
 
-For deployment instructions, see [`CLOUD_DEPLOYMENT.md`](CLOUD_DEPLOYMENT.md ).
-
 ## Local Development
 
 ### Prerequisites
