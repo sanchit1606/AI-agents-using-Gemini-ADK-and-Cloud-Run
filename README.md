@@ -105,22 +105,9 @@ Health check endpoint.
 ### GET /
 Welcome message.
 
-## Cloud Deployment
-
-For detailed deployment instructions to Google Cloud Run using Cloud Shell or Cloud Shell Editor, see [`CLOUD_DEPLOYMENT.md`](CLOUD_DEPLOYMENT.md).
-
-Quick summary:
-- ✅ Create Gemini API key at [Google AI Studio](https://aistudio.google.com/app/apikeys)
-- ✅ Deploy using `gcloud run deploy` with Docker image
-- ✅ Set `GOOGLE_API_KEY` environment variable
-- ✅ Get your public Cloud Run service URL
-
-See [`CLOUD_DEPLOYMENT.md`](CLOUD_DEPLOYMENT.md) for complete setup, configuration options, security best practices, and troubleshooting guide.
-
 ## Support
 
 For issues or questions:
 1. Check [`local-testing.md`](local-testing.md ) for local testing guide
-2. Check [`CLOUD_DEPLOYMENT.md`](CLOUD_DEPLOYMENT.md) for cloud deployment help
-3. Review [Cloud Run documentation](https://cloud.google.com/run/docs)
-4. Check [Gemini API docs](https://ai.google.dev/)
+2. Review [Cloud Run documentation](https://cloud.google.com/run/docs)
+3. Check [Gemini API docs](https://ai.google.dev/)
