@@ -112,12 +112,3 @@ Health check endpoint.
 }
 ```
 
-### GET /
-Welcome message.
-
-## Support
-
-For issues or questions:
-1. Check [`local-testing.md`](local-testing.md ) for local testing guide
-2. Review [Cloud Run documentation](https://cloud.google.com/run/docs)
-3. Check [Gemini API docs](https://ai.google.dev/)
